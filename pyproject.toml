@@ -1,0 +1,23 @@
+[project]
+name = "sianogram"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "opencv-python>=4.13.0.92",
+    "pydicom>=3.0.2",
+    "scipy>=1.17.1",
+    "simpleitk>=2.5.4",
+    "torch==2.6.*",
+    "torchaudio>=2.6.0",
+    "torchvision>=0.21.0",
+    "tqdm>=4.66.5",
+]
+
+[[tool.uv.index]]
+url = "https://download.pytorch.org/whl/cu124"
+
+[[tool.uv.index]]
+url = "https://download.pytorch.org/whl/cu121"
