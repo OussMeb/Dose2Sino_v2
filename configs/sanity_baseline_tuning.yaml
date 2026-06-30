@@ -1,0 +1,64 @@
+# configs/sanity_baseline_tuning.yaml
+# Tunable same-patient sanity config for accepted baseline:
+# Attention + InstanceNorm3D + learned Conv3D aggregation
+
+data:
+  data_path: /mnt/data/shared/tomo_data/
+  cache_dir: /mnt/data/shared/tomo_data/cache_sino
+  patient_id: "324181"
+  reduction_ratio: 8
+  max_dose: 70.0
+  use_cache: true
+
+output:
+  output_dir: sanity_outputs/baseline_tuning
+
+model:
+  base_filters: 16
+  attention_kernel_size: 15
+  detector_width: 64
+
+  # Options:
+  #   sigmoid
+  #   scaled_sigmoid
+  #   calibrated_sigmoid
+  #   hard_sigmoid
+  #   softplus_squash
+  #   clamp
+  activation: sigmoid
+  activation_scale: 1.0
+  activation_bias: 0.0
+
+training:
+  epochs: 150
+  batch_size: 1
+  num_workers: 0
+  learning_rate: 0.0001
+  weight_decay: 0.0
+  grad_clip: 1.0
+  device: cuda
+  amp: true
+  save_every: 10
+  log_every: 1
+  seed: 42
+
+scheduler:
+  enabled: true
+  factor: 0.5
+  patience: 10
+  min_lr: 0.000001
+
+loss:
+  open_threshold: 0.001
+  charbonnier_eps: 0.001
+
+  # Baseline amplitude-focused setup.
+  closed_weight: 1.0
+  open_weight: 5.0
+  high_value_weight: 2.0
+  high_value_power: 2.0
+
+  open_l1_weight: 1.0
+  closed_penalty_weight: 0.2
+  gradient_weight: 0.1
+  bce_weight: 0.0
